@@ -61,3 +61,11 @@ class ConeReturnsForEachEffectDeclaration(val lambda: ConeValueParameterReferenc
     override fun <R, D> accept(contractDescriptionVisitor: ConeContractDescriptionVisitor<R, D>, data: D): R =
         contractDescriptionVisitor.visitReturnsForEachEffectDeclaration(this, data)
 }
+
+/**
+ * Effect which specifies, that [predicate] is true/false for each of return value
+ */
+class ConeForEachReturnValueEffectDeclaration(val predicate: ConeValueParameterReference, val isNegate: Boolean) : ConeEffectDeclaration() {
+    override fun <R, D> accept(contractDescriptionVisitor: ConeContractDescriptionVisitor<R, D>, data: D): R =
+        contractDescriptionVisitor.visitForEachReturnValueEffectDeclaration(this, data)
+}

@@ -40,6 +40,12 @@ class ConeContractRenderer(private val builder: StringBuilder) : ConeContractDes
         returnsForEachEffect.iterable.accept(this, data)
     }
 
+    override fun visitForEachReturnValueEffectDeclaration(forEachEffect: ConeForEachReturnValueEffectDeclaration, data: Nothing?) {
+        if (forEachEffect.isNegate) builder.append("!")
+        forEachEffect.predicate.accept(this, data)
+        builder.append(" forEachOf returnValue()")
+    }
+
     override fun visitLogicalBinaryOperationContractExpression(binaryLogicExpression: ConeBinaryLogicExpression, data: Nothing?) {
         inBracketsIfNecessary(binaryLogicExpression, binaryLogicExpression.left) { binaryLogicExpression.left.accept(this, data) }
         builder.append(" ${binaryLogicExpression.kind.token} ")
